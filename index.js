@@ -43,12 +43,12 @@ app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.get('/favicon.ico', (req, res) => res.status(204));
-
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
+
+app.get('/favicon.ico', (req, res) => res.status(404));
 
 const store = MongoDBStore.create({
   mongoUrl: "mongodb://127.0.0.1:27017/yelp-camp",
@@ -98,7 +98,7 @@ app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/reviews", reviewRoutes);
 
 app.get("/", (req, res) => {
-  res.render("home");
+  res.render("home.ejs");
 });
 
 app.all("*", (req, res, next) => {
