@@ -48,7 +48,7 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
 
-app.get('/favicon.ico', (req, res) => res.status(404));
+// app.get('/favicon.ico', (req, res) => res.status(404));
 
 const store = MongoDBStore.create({
   mongoUrl: "mongodb://127.0.0.1:27017/yelp-camp",
