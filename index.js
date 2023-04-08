@@ -99,7 +99,12 @@ app.use("/campgrounds/:id/reviews", reviewRoutes);
 
 app.get("/", (req, res) => {
   console.log("route hit");
-  res.render("home");
+  try {
+    res.render("home");
+  } catch (error) {
+     console.log(error);
+  }
+  
 });
 
 app.all("*", (req, res, next) => {
