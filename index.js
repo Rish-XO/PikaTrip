@@ -1,6 +1,9 @@
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
+if (process.env.NODE_ENV === 'production') {
+	app.use(express.static('client/build'));
+}
 
 const express = require("express");
 const path = require("path");
@@ -97,18 +100,17 @@ app.use("/", userRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/reviews", reviewRoutes);
 
-app.get("/", (req, res) => {
-  console.log("route hit");
-  try {
+app.get("/", async(req, res) => {
+    console.log("route hit");
     res.render("home");
-  } catch (error) {
-     console.log(error);
-  }
-  
 });
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
+});
+
+app.get('*', (request, response) => {
+	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 app.use((err, req, res, next) => {
