@@ -61,12 +61,12 @@ app.get('/favicon.ico', (req, res) => res.status(404));
 //   touchAfter: 24 * 60 * 60,
 // });
 
-store.on("error", function (e) {
-  console.log("SESSION STORE ERROR", e);
-});
+// store.on("error", function (e) {
+//   console.log("SESSION STORE ERROR", e);
+// });
 
 const sessionConfig = {
-  store,
+  // store,
   name: "session",
   secret: "thisshouldbeabettersecret",
   resave: false,
