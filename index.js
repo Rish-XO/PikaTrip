@@ -1,9 +1,9 @@
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static('client/build'));
-}
+// if (process.env.NODE_ENV === 'production') {
+// 	app.use(express.static('client/build'));
+// }
 
 const express = require("express");
 const path = require("path");
@@ -51,7 +51,7 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
 
-// app.get('/favicon.ico', (req, res) => res.status(404));
+app.get('/favicon.ico', (req, res) => res.status(404));
 
 const store = MongoDBStore.create({
   mongoUrl: "mongodb://127.0.0.1:27017/yelp-camp",
@@ -86,15 +86,20 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-  //   if (!['/login', '/register', '/'].includes(req.originalUrl)) {
-  //     req.session.returnTo = req.originalUrl;
-  // }
+    if (!['/login', '/register', '/'].includes(req.originalUrl)) {
+      req.session.returnTo = req.originalUrl;
+  }
   // console.log(req.session);
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
+
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store')
+  next()
+})
 
 app.use("/", userRoutes);
 app.use("/campgrounds", campgroundRoutes);
@@ -109,9 +114,6 @@ app.all("*", (req, res, next) => {
   next(new ExpressError("Page Not Found", 404));
 });
 
-app.get('*', (request, response) => {
-	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
 
 app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
