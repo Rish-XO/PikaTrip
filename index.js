@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV != "production") {
+if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 // if (process.env.NODE_ENV === 'production') {
@@ -28,17 +28,17 @@ const reviewRoutes = require("./routes/reviews");
 
 const MongoDBStore = require("connect-mongo");
 
-const dbUrl = process.env.DB_URL;
+const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
 
 mongoose.set("strictQuery", false);
 // "mongodb://127.0.0.1:27017/yelp-camp"
-// mongoose.connect(dbUrl);
+mongoose.connect(dbUrl);
 
-// const db = mongoose.connection;
-// db.on("error", console.error.bind(console, "connection error"));
-// db.once("open", () => {
-//   console.log("database connected");
-// });
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error"));
+db.once("open", () => {
+  console.log("database connected");
+});
 
 console.log(process.env.DB_URL,"#############################################$^$#^$#^#$^#$^#$^#$^#$^");
 
@@ -55,18 +55,18 @@ app.use(mongoSanitize());
 
 app.get('/favicon.ico', (req, res) => res.status(404));
 
-// const store = MongoDBStore.create({
-//   mongoUrl: "mongodb://127.0.0.1:27017/yelp-camp",
-//   secret: "thisshouldbeabettersecret",
-//   touchAfter: 24 * 60 * 60,
-// });
+const store = MongoDBStore.create({
+  mongoUrl: "mongodb://127.0.0.1:27017/yelp-camp",
+  secret: "thisshouldbeabettersecret",
+  touchAfter: 24 * 60 * 60,
+});
 
-// store.on("error", function (e) {
-//   console.log("SESSION STORE ERROR", e);
-// });
+store.on("error", function (e) {
+  console.log("SESSION STORE ERROR", e);
+});
 
 const sessionConfig = {
-  // store,
+  store,
   name: "session",
   secret: "thisshouldbeabettersecret",
   resave: false,
