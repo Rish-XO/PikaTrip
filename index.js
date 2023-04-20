@@ -29,16 +29,7 @@ const reviewRoutes = require("./routes/reviews");
 const MongoDBStore = require("connect-mongo");
 
 const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
-
-mongoose.set("strictQuery", false);
-// "mongodb://127.0.0.1:27017/yelp-camp"
-mongoose.connect(dbUrl);
-
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error"));
-db.once("open", () => {
-  console.log("database connected");
-});
+const port = process.env.PORT || 3000;
 
 console.log(process.env.DB_URL,"#############################################$^$#^$#^#$^#$^#$^#$^#$^");
 
@@ -54,6 +45,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(mongoSanitize());
 
 app.get('/favicon.ico', (req, res) => res.status(404));
+
+
 
 const store = MongoDBStore.create({
   mongoUrl: dbUrl,
@@ -103,6 +96,19 @@ app.use((req, res, next) => {
   next()
 })
 
+mongoose.set("strictQuery", false);
+// "mongodb://127.0.0.1:27017/yelp-camp"
+mongoose.connect(dbUrl);
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error"));
+db.once("open", () => {
+  console.log("database connected");
+  app.listen(port, () => {
+    console.log(`Serving on the port ${port}`);
+  });
+});
+
 app.use("/", userRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/reviews", reviewRoutes);
@@ -123,8 +129,5 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error", { err });
 });
 
-const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-  console.log(`Serving on the port ${port}`);
-});
+
