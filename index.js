@@ -55,11 +55,11 @@ app.use(mongoSanitize());
 
 app.get('/favicon.ico', (req, res) => res.status(404));
 
-const store = MongoDBStore.create({
-  mongoUrl: "mongodb://127.0.0.1:27017/yelp-camp",
-  secret: "thisshouldbeabettersecret",
-  touchAfter: 24 * 60 * 60,
-});
+// const store = MongoDBStore.create({
+//   mongoUrl: "mongodb://127.0.0.1:27017/yelp-camp",
+//   secret: "thisshouldbeabettersecret",
+//   touchAfter: 24 * 60 * 60,
+// });
 
 store.on("error", function (e) {
   console.log("SESSION STORE ERROR", e);
