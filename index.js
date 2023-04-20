@@ -40,6 +40,8 @@ db.once("open", () => {
   console.log("database connected");
 });
 
+console.log(process.env.CLOUDINARY_CLOUD_NAME,"#############################################$^$#^$#^#$^#$^#$^#$^#$^");
+
 const app = express();
 
 app.engine("ejs", ejsMate);
