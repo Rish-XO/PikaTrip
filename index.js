@@ -40,7 +40,7 @@ db.once("open", () => {
   console.log("database connected");
 });
 
-console.log(process.env.CLOUDINARY_CLOUD_NAME,"#############################################$^$#^$#^#$^#$^#$^#$^#$^");
+console.log(process.env.DB_URL,"#############################################$^$#^$#^#$^#$^#$^#$^#$^");
 
 const app = express();
 
