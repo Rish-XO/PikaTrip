@@ -31,7 +31,6 @@ const MongoDBStore = require("connect-mongo");
 const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
 const port = process.env.PORT || 3000;
 
-console.log(process.env.DB_URL,"#############################################$^$#^$#^#$^#$^#$^#$^#$^");
 
 const app = express();
 

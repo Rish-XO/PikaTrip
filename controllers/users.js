@@ -21,7 +21,12 @@ module.exports.register = async (req, res, next) => {
 };
 
 module.exports.renderLogin = (req, res) => {
-  res.render("users/login");
+  if (!res.locals.currentUser) {
+    res.render("users/login");
+  }
+  else{
+    res.redirect("/campgrounds")
+  }
 };
 
 module.exports.login = (req, res) => {

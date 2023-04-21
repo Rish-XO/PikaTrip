@@ -6,7 +6,7 @@ const map = new mapboxgl.Map({
   style: "mapbox://styles/mapbox/light-v11",
 //   india as center 77.970080,27.059978
 // default center -103.5917, 40.6699
-  center: [-103.5917, 40.6699],
+  center: [77.970080,27.059978],
   zoom: 3,
 });
 
