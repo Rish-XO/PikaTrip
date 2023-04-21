@@ -2,7 +2,7 @@
 <div class="row">
   <h1 class="text-center">New Campground</h1>
   <div class="col-6 offset-3">
-    <form action="/campgrounds" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+    <form action="/campgrounds" method="POST" onsubmit="myButton.disabled = true; return true;" novalidate class="validated-form" enctype="multipart/form-data">
       <div class="mb-3">
         <label class="form-label" for="title">Title</label>
         <input
@@ -16,7 +16,7 @@
           looks good!
         </div>
       </div>
-      <div class="mb-3">
+      <div class="mb-3"> 
         <label class="form-label" for="location">Location</label>
         <input
           class="form-control"
@@ -84,7 +84,7 @@
       </div>
    
       <div class="mb-3">
-        <button class="btn btn-success">Add Campground</button>
+        <button class="btn btn-success" name="myButton">Add Campground</button>
       </div>
     </form>
     <a href="/campgrounds">All campgrounds</a>
